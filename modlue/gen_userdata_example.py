@@ -1,5 +1,6 @@
 # This use to config ubuntu20.04 and centOS7.
 # it not work for any case, it depend on your computer, os, defult config.
+from json import dumps
 
 def gen_userdata(os,defaultpassword,ComputerName,CustomIPa4,CustomNetPrefix,CustomDF4GW):
     userdata = []
@@ -27,7 +28,7 @@ users:
     if CustomIPa4!="-":
         # netplan eth0
         if os in ["ubuntu20.04"]:
-            writefile.append({"path":"/etc/netplan/00-installer-config.yaml","content":f"""
+            writefile.append({"path":"/etc/netplan/00-installer-config.yaml","content":dumps(f"""
 network:
   ethernets:
     eth0:
@@ -36,7 +37,7 @@ network:
       nameservers:
         addresses: [8.8.8.8]
   version: 2
-"""})
+""")})
             runcmd.append("netplan apply")
 
     # eject config iso
